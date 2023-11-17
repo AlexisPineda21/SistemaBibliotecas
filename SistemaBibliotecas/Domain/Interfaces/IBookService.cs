@@ -6,6 +6,8 @@ namespace SistemaBibliotecas.Domain.Interfaces
     {
         Task<IEnumerable<Book>> GetBookAsync();
         Task<Book> GetBookByTitleAsync(string title);
+        Task<Book> RegisterBookAsync(Book book);
+
 
     }
 }

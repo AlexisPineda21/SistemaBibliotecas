@@ -16,10 +16,10 @@ namespace SistemaBibliotecas.DAL
             modelBuilder.Entity<Client>().HasIndex(c => c.Email).IsUnique();
             modelBuilder.Entity<Book>().HasIndex(b => b.Title).IsUnique();
         }
-        //public DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; set; }
 
-        //public DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
-        //public DbSet<Borrowing> Borrowings { get; set; }
+        public DbSet<Borrowing> Borrowings { get; set; }
     }
 }

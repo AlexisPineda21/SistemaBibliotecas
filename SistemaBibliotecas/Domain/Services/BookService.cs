@@ -2,33 +2,38 @@
 using SistemaBibliotecas.DAL;
 using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
-using System.Diagnostics.Metrics;
 
 namespace SistemaBibliotecas.Domain.Services
 {
-    public class ClientService : IClientService
+    public class BookService : IBookService
     {
         public readonly DataBaseContext _context;
-        public ClientService(DataBaseContext context)
+        public BookService(DataBaseContext context)
         {
             _context = context;
         }
-        public async Task<Client> GetClientByIdAsync(Guid id)
+        public async Task<IEnumerable<Book>> GetBookAsync()
         {
-            return await _context.Clients.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Books.ToListAsync();
         }
 
-        public async Task<Client> RegisterClientAsync(Client client)
+        public async Task<Book> GetBookByTitleAsync(string title)
+        {
+            return await _context.Books.FirstOrDefaultAsync(x => x.Title == title);
+        }
+
+        public async Task<Book> RegisterBookAsync(Book book)
         {
             try
             {
-                client.Id = Guid.NewGuid();
+                book.Id = Guid.NewGuid();
+                book.Status = false;
 
 
-                _context.Clients.Add(client);
+                _context.Books.Add(book);
                 await _context.SaveChangesAsync();
 
-                return client;
+                return book;
             }
             catch (DbUpdateException dbUpdateException)
             {
