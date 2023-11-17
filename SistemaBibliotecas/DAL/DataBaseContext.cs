@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaBibliotecas.DAL.Entites;
 
 namespace SistemaBibliotecas.DAL
 {
@@ -13,7 +14,7 @@ namespace SistemaBibliotecas.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Client>().HasIndex(c => c.Email).IsUnique();
-            //modelBuilder.Entity<Room>().HasIndex("Number", "HotelId").IsUnique();
+            modelBuilder.Entity<Book>().HasIndex(b => b.Title).IsUnique();
         }
         //public DbSet<Book> Books { get; set; }
 
