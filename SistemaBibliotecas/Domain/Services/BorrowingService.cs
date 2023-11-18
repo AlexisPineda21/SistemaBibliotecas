@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecas.DAL;
 using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
@@ -20,6 +21,16 @@ namespace SistemaBibliotecas.Domain.Services
                 borrowing.ClientId = ClientId;
                 borrowing.BookId = BookId;
 
+                Book book = await _context.Books.FirstOrDefaultAsync(x => x.Id == BookId);
+
+                if (book.Status == true) 
+                {
+                    throw new Exception("The book is already borrowed") ;
+                }
+
+                borrowing.BorrowingDate = DateTime.Now;
+
+                borrowing.DeliveryDate = DateTime.Now.AddDays(7);
 
                 _context.Borrowings.Add(borrowing);
                 await _context.SaveChangesAsync();
@@ -28,9 +39,7 @@ namespace SistemaBibliotecas.Domain.Services
             }
             catch (DbUpdateException dbUpdateException)
             {
-                //Captura un mensaje cuando el país ya existe
                 throw new Exception(dbUpdateException.InnerException?.Message ?? dbUpdateException.Message);
-                //coallesense notation --> ?? (Validación de nulleables)
             }
         }
 

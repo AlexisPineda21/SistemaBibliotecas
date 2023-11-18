@@ -15,7 +15,7 @@ namespace SistemaBibliotecas.Domain.Services
         }
         public async Task<Client> GetClientByIdAsync(Guid id)
         {
-            return await _context.Clients.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Clients.Include(x => x.Borrowings).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Client> RegisterClientAsync(Client client)
@@ -32,9 +32,7 @@ namespace SistemaBibliotecas.Domain.Services
             }
             catch (DbUpdateException dbUpdateException)
             {
-                //Captura un mensaje cuando el país ya existe
                 throw new Exception(dbUpdateException.InnerException?.Message ?? dbUpdateException.Message);
-                //coallesense notation --> ?? (Validación de nulleables)
             }
         }
     }

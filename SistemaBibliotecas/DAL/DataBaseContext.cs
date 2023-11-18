@@ -15,6 +15,7 @@ namespace SistemaBibliotecas.DAL
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Client>().HasIndex(c => c.Email).IsUnique();
             modelBuilder.Entity<Book>().HasIndex(b => b.Title).IsUnique();
+            modelBuilder.Entity<Borrowing>().HasIndex("BookId", "ClientId", "BorrowingDate").IsUnique();
         }
         public DbSet<Book> Books { get; set; }
 
