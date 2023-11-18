@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecas.DAL;
+using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
 using SistemaBibliotecas.Domain.Services;
 using System.Text.Json.Serialization;
@@ -19,6 +20,8 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBorrowingService, BorrowingService>();
 
+builder.Services.AddTransient<SeederDB>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -26,12 +29,26 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+SeederData();
+void SeederData()
+{
+    IServiceScopeFactory? scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope? scope = scopedFactory.CreateScope())
+    {
+        SeederDB? service = scope.ServiceProvider.GetService<SeederDB>();
+        service.SeederAsync().Wait();
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
