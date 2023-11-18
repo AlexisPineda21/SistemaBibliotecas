@@ -44,11 +44,11 @@ namespace SistemaBibliotecas.Controllers
 
         [HttpPost, ActionName("Create")]
         [Route("Create")]
-        public async Task<ActionResult> CreateBorrowingAsync(Borrowing borrowing, Guid clientId, Guid bookId)
+        public async Task<ActionResult> CreateBorrowingAsync( Guid clientId, Guid bookId)
         {
             try
             {
-                var createdBorrowing = await _borrowingService.CreateBorrowingAsync(borrowing, clientId, bookId);
+                var createdBorrowing = await _borrowingService.CreateBorrowingAsync(clientId, bookId);
 
                 if (createdBorrowing == null) return NotFound();
 

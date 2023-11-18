@@ -6,7 +6,7 @@ namespace SistemaBibliotecas.Domain.Interfaces
     {
         Task<IEnumerable<Borrowing>> GetBorrowingAsync();
         Task<Borrowing> GetBorrowingByIdClientAsync(Guid ClientId);
-        Task<Borrowing> CreateBorrowingAsync(Borrowing borrowing, Guid ClientId, Guid BookId);
+        Task<Borrowing> CreateBorrowingAsync( Guid ClientId, Guid BookId);
 
     }
 }

@@ -13,10 +13,12 @@ namespace SistemaBibliotecas.Domain.Services
         {
             _context = context;
         }
-        public async Task<Borrowing> CreateBorrowingAsync(Borrowing borrowing, Guid ClientId, Guid BookId)
+        public async Task<Borrowing> CreateBorrowingAsync(Guid ClientId, Guid BookId)
         {
             try
             {
+                Borrowing borrowing = new Borrowing();
+
                 borrowing.Id = Guid.NewGuid();
                 borrowing.ClientId = ClientId;
                 borrowing.BookId = BookId;
