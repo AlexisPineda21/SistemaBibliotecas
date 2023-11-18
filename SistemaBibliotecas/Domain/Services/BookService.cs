@@ -12,7 +12,7 @@ namespace SistemaBibliotecas.Domain.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<Book>> GetBookAsync()
+        public async Task<IEnumerable<Book>> GetBooksAsync()
         {
             return await _context.Books.ToListAsync();
         }

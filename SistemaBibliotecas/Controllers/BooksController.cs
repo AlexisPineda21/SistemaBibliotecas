@@ -30,12 +30,12 @@ namespace SistemaBibliotecas.Controllers
         }
 
         [HttpGet, ActionName("Get")]
-        [Route("GetByName/{name}")] 
-        public async Task<ActionResult<Book>> GetBookByTitleAsync(string name)
+        [Route("GetByTitle/{title}")] 
+        public async Task<ActionResult<Book>> GetBookByTitleAsync(string title)
         {
-            if (name == null) return BadRequest("Book's title is required!");
+            if (title == null) return BadRequest("Book's title is required!");
 
-            var book = await _bookService.GetBookByTitleAsync(name);
+            var book = await _bookService.GetBookByTitleAsync(title);
 
             if (book == null) return NotFound(); 
 
@@ -45,7 +45,7 @@ namespace SistemaBibliotecas.Controllers
 
         [HttpPost, ActionName("Create")]
         [Route("Create")]
-        public async Task<ActionResult> CreateCountryAsync(Book book)
+        public async Task<ActionResult> RegisterBookAsync(Book book)
         {
             try
             {
