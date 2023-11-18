@@ -23,10 +23,28 @@ namespace SistemaBibliotecas.Domain.Services
 
                 Book book = await _context.Books.FirstOrDefaultAsync(x => x.Id == BookId);
 
+                Client client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == ClientId);
+
+                if (book == null || client == null)
+                {
+                    throw new Exception("Book not found");
+                }
+
+                if (book == null || client == null)
+                {
+                    throw new Exception("Client not found");
+                }
+
                 if (book.Status == true) 
                 {
                     throw new Exception("The book is already borrowed") ;
                 }
+
+                book.Status = true;
+
+                borrowing.Book = book;
+
+                borrowing.Client = client;
 
                 borrowing.BorrowingDate = DateTime.Now;
 
