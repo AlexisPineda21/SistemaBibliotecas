@@ -18,6 +18,12 @@ namespace SistemaBibliotecas.Domain.Services
             return await _context.Clients.Include(x => x.Borrowings).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<IEnumerable<Client>> GetClientsAsync()
+        {
+            return await _context.Clients.ToListAsync();
+
+        }
+
         public async Task<Client> RegisterClientAsync(Client client)
         {
             try

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
+using SistemaBibliotecas.Domain.Services;
 
 namespace SistemaBibliotecas.Controllers
 {
@@ -15,6 +16,20 @@ namespace SistemaBibliotecas.Controllers
             _clientService = clientService;
         }
 
+
+        [HttpGet, ActionName("Get")]
+        [Route("Get")]
+        public async Task<ActionResult<IEnumerable<Client>>> GetClientsAsync()
+        {
+            var client = await _clientService.GetClientsAsync();
+
+            if (client == null || !client.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(client);
+        }
 
         [HttpGet, ActionName("Get")]
         [Route("GetById/{id}")] 

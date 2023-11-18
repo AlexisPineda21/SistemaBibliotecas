@@ -27,12 +27,12 @@ namespace SistemaBibliotecas.Domain.Services
 
                 Client client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == ClientId);
 
-                if (book == null || client == null)
+                if (book == null)
                 {
                     throw new Exception("Book not found");
                 }
 
-                if (book == null || client == null)
+                if (client == null)
                 {
                     throw new Exception("Client not found");
                 }
