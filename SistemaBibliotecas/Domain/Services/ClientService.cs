@@ -20,7 +20,7 @@ namespace SistemaBibliotecas.Domain.Services
 
         public async Task<IEnumerable<Client>> GetClientsAsync()
         {
-            return await _context.Clients.ToListAsync();
+            return await _context.Clients.Include(x => x.Borrowings).ToListAsync();
 
         }
 

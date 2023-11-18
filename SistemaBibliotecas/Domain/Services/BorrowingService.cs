@@ -65,7 +65,7 @@ namespace SistemaBibliotecas.Domain.Services
 
         public async Task<IEnumerable<Borrowing>> GetBorrowingAsync()
         {
-            return await _context.Borrowings.ToListAsync();
+            return await _context.Borrowings.Include(x => x.Client).Include(x => x.Book).ToListAsync();
         }
 
         public async Task<Borrowing> GetBorrowingByIdClientAsync(Guid ClientId)
