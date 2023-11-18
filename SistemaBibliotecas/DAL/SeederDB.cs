@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.Metrics;
+using SistemaBibliotecas.DAL.Entites;
 using static System.Reflection.Metadata.BlobBuilder;
 
-namespace SistemaBibliotecas.DAL.Entites
+namespace SistemaBibliotecas.DAL
 {
     public class SeederDB
     {
@@ -22,7 +23,7 @@ namespace SistemaBibliotecas.DAL.Entites
 
             await PopulateBooksAsync();
 
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
         }
 
         #region Private Methods
@@ -37,7 +38,7 @@ namespace SistemaBibliotecas.DAL.Entites
                     Email = "juan@hotmail.com",
                     Name = "Juan A",
                     Password = "juan1234",
-                    
+
                 });
 
                 _context.Clients.Add(new Client

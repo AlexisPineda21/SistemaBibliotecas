@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecas.DAL;
-using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
 using SistemaBibliotecas.Domain.Services;
 using System.Text.Json.Serialization;
