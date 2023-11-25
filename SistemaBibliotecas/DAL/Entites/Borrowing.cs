@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SistemaBibliotecas.DAL.Entites
 {
@@ -11,6 +12,9 @@ namespace SistemaBibliotecas.DAL.Entites
         [Required(ErrorMessage = "The field {0} is mandatory")]
         [Display(Name = "DeliveryDate")]
         public DateTime DeliveryDate { get; set; }
+
+        [Display(Name = "DeliveryDate")]
+        public DateTime? ReturnedDate { get; set; }
 
         [Required(ErrorMessage = "The field {0} is mandatory")]
         [Display(Name = "Book Id")]

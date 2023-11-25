@@ -64,5 +64,29 @@ namespace SistemaBibliotecas.Controllers
                 return Conflict(ex.Message);
             }
         }
+
+        [HttpPut, ActionName("Return")]
+        [Route("Return")]
+        public async Task<ActionResult> ReturnBorrowingAsync(Guid BorrowingId)
+        {
+            try
+            {
+                var returnedBorrowing = await _borrowingService.ReturnBorrowingAsync(BorrowingId);
+
+                if (returnedBorrowing == null) return NotFound();
+
+                return Ok(returnedBorrowing);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("duplicate"))
+                {
+                    return Conflict(String.Format("The borrowing {0} already exists."));
+                }
+
+                return Conflict(ex.Message);
+            }
+        }
+
     }
 }

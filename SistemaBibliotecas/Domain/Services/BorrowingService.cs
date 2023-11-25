@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecas.DAL;
 using SistemaBibliotecas.DAL.Entites;
 using SistemaBibliotecas.Domain.Interfaces;
+using System.Net;
 
 namespace SistemaBibliotecas.Domain.Services
 {
@@ -52,6 +53,8 @@ namespace SistemaBibliotecas.Domain.Services
 
                 borrowing.DeliveryDate = DateTime.Now.AddDays(7);
 
+                borrowing.ReturnedDate = null;
+
                 _context.Borrowings.Add(borrowing);
                 await _context.SaveChangesAsync();
 
@@ -71,6 +74,38 @@ namespace SistemaBibliotecas.Domain.Services
         public async Task<Borrowing> GetBorrowingByIdClientAsync(Guid ClientId)
         {
             return await _context.Borrowings.FirstOrDefaultAsync(x => x.ClientId == ClientId);
+        }
+
+        public async Task<Borrowing> ReturnBorrowingAsync(Guid BorrowingId)
+        {
+            try
+            {
+                Borrowing borrowing = await _context.Borrowings.FirstOrDefaultAsync(x => x.Id == BorrowingId);
+
+                if (borrowing == null)
+                {
+                    throw new Exception("Borrowing not found");
+                }
+
+                if(borrowing.ReturnedDate != null)
+                {
+                    throw new Exception("Borrowing already returned");
+                }
+
+                Book book = await _context.Books.FirstOrDefaultAsync(x => x.Id == borrowing.BookId);
+
+                book.Status = false;
+
+                borrowing.ReturnedDate = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                return borrowing;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                throw new Exception(dbUpdateException.InnerException?.Message ?? dbUpdateException.Message);
+            }
         }
     }
 }
